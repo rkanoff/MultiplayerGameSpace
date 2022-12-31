@@ -1,0 +1,23 @@
+require('dotenv').config()
+const express = require('express')
+const app = express()
+const PORT = process.env.PORT || 8081
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+const connectDB = require('./config/dbConn')
+const path = require('path')
+const corsOptions = require('./config/corsOptions')
+const verifyJWT = require('./middleware/verifyJWT')
+const credentials = require('./middleware/credentials')
+
+connectDB()
+app.use(credentials)
+app.use(cors(corsOptions))
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('/'))
+app.use(express.json())
+app.use(cookieParser())
+app.use('/auth', require('./routes/authRoutes'))
+app.use('/users', require('./routes/userRoutes'))
+app.use(verifyJWT)
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

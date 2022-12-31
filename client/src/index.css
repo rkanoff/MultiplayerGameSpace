@@ -1,0 +1,14 @@
+.dark {
+    background-color: #333;
+    color: #fff;
+    --dark-button: red;
+    transition: all .5s;
+}
+.light {
+    background-color: #fff;
+    color: #333;
+    transition: all .5s;
+}
+.custom-btn {
+    background-color: var(--dark-button);
+}
