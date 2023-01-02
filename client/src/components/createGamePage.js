@@ -7,8 +7,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTheme from '../hooks/useTheme';
+import UserNavBar from './userNavBar';
 
-const RegisterUserPage = () => {
+const CreateGamePage = () => {
     const url = "http://localhost:8081/users/register"
     const navigate = useNavigate()
     const [form, setForm] = useState({username : "", email : "", password : ""})
@@ -35,7 +36,8 @@ const RegisterUserPage = () => {
     }
 
     return (
-        <Container fluid className={`vh-100 d-flex align-items-center justify-content-center ${theme}`}>    
+        <Container fluid className={`vh-100 d-flex justify-content-center align-items-center ${theme}`}>
+            
             <Form>
                 <h2>Register Below!</h2>
                 <Form.Group className='mb-3'>
@@ -85,4 +87,4 @@ const RegisterUserPage = () => {
     )
 }
 
-export default RegisterUserPage
+export default CreateGamePage

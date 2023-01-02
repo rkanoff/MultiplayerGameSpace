@@ -3,7 +3,6 @@ const router = express.Router()
 const newUserModel = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const { newUserValidation } = require('../models/userValidation')
-const verifyJWT = require('../middleware/verifyJWT')
 
 // create new user
 router.post('/register', async (req, res) => {

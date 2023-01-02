@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt')
 const loginLimiter = require('../middleware/loginLimiter')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
-const verifyJWT = require('../middleware/verifyJWT')
 
 // log user in
 router.post('/login', loginLimiter, asyncHandler(async (req, res) => {

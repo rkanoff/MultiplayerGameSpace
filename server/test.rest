@@ -28,3 +28,19 @@ POST http://localhost:8081/auth/logout
 Content-Type: application/json
 
 ###
+
+POST http://localhost:8081/games/create
+Content-Type: application/json
+
+{
+    "name": "TestGame3",
+    "type": "Justwhatevs",
+    "players": ["player1","player2"]
+}
+
+###
+
+GET http://localhost:8081/games/getAll
+Content-Type: application/json
+
+###

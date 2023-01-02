@@ -1,15 +1,17 @@
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Nav from 'react-bootstrap/Nav'
+import Stack from 'react-bootstrap/Stack'
+import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import useAuth from '../hooks/useAuth';
-import useTheme from '../hooks/useTheme';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import useAuth from '../hooks/useAuth'
+import useTheme from '../hooks/useTheme'
 
 const LandingPage = () => {
     const navigate = useNavigate()
@@ -41,12 +43,10 @@ const LandingPage = () => {
     }
 
     return (
-        <>
-        <div className={`container-fluid vh-100 ${theme}`}>
-            <div className="row d-flex justify-content-center align-items-center h-100 ">
-                <Row className="align-items-center">
-                <Col className="d-flex justify-content-center">
-                    <Form className="w-50">
+        <Container fluid className={`vh-100 d-flex align-items-center ${theme}`}>
+            <Col>
+                <Stack className='align-items-center'>
+                    <Form className='w-50'>
                         <h2>Login</h2>
                         <Form.Group className="mb-3">
                             <Form.Label>Username</Form.Label>
@@ -64,32 +64,35 @@ const LandingPage = () => {
                                 onChange={ updateForm }    
                             />
                         </Form.Group>
-                        <Button variant="primary" type="submit" onClick={ handleLogin }>
-                            Submit
-                        </Button>
-                        <ToggleButtonGroup type='radio' name='themeOption' defaultValue={theme} onChange={setTheme}>
-                            <ToggleButton id='darkMode' value={'dark'}>
-                                Dark Mode
-                            </ToggleButton>
-                            <ToggleButton id='lightMode' value={'light'}>
-                                Light Mode
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                        <Row>
+                            <Col>
+                            <Button className='custom-btn' type="submit" onClick={ handleLogin }>
+                                Submit
+                            </Button>
+                            </Col>
+                            <Col md='auto'>
+                            <ToggleButtonGroup type='radio' name='themeOption' defaultValue={theme} onChange={setTheme}>
+                                <ToggleButton className='custom-btn' id='darkMode' value={'dark'}>
+                                    Dark Mode
+                                </ToggleButton>
+                                <ToggleButton className='custom-btn' id='lightMode' value={'light'}>
+                                    Light Mode
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                            </Col>
+                        </Row>
                     </Form>
-                </Col>
-                <Col className="d-flex justify-content-center">
-                <Container>
-                    <h1>Multiplayer Game Space</h1>
-                    <h5>New user? Register below!</h5>
-                    <Button variant="primary" type="submit" onClick={ handleRegister }>
-                        Register
-                    </Button>
-                </Container> 
-                </Col>
-                </Row>
-            </div>
-        </div>
-        </>
+                </Stack>
+            </Col>
+            <Col>
+                <Stack className='d-flex align-items-center'>
+                    <h1 className='display-4'>Multiplayer Game Space</h1>
+                    <Nav.Item>
+                            <Nav.Link style={{fontSize:"28px"}} className='custom-link' onClick={ handleRegister }>New user? Register here!</Nav.Link>
+                    </Nav.Item>
+                </Stack>
+            </Col>
+        </Container>
     )
 }
 
