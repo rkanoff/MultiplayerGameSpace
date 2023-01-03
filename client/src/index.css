@@ -1,18 +1,20 @@
 .dark {
     background-color: #333;
     color: #fff;
-    transition: all .5s;
+    transition: all .3s;
     --buttonBG: #4169E1;
     --linkC: #87CEFA;
     --navBG: #4e5861;
     --navC: #fff;
+    --tableTheme: dark;
 }
 .light {
     background-color: #fff;
     color: #333;
-    transition: all .5s;
+    transition: all .3s;
     --buttonBG: #4169E1;
     --linkC: #4169E1;
+    --tableTheme: light;
 }
 .custom-btn {
     background-color: var(--buttonBG);
@@ -24,6 +26,7 @@
 .custom-nav {
     background-color: var(--navBG);
     color: var(--navC);
+    position: sticky;
 }
 .dropdown-menu {
     background-color: #333;

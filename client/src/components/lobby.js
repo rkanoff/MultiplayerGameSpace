@@ -4,11 +4,13 @@ import Container from 'react-bootstrap/esm/Container'
 import Table from 'react-bootstrap/Table'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LobbyPage = () => {
     const { theme } = useTheme()
     const axiosPrivate = useAxiosPrivate()
     const [games, setGames] = useState([])
+    const navigate = useNavigate()
 
     const getGames = async () => {
         const res = await axiosPrivate
@@ -21,19 +23,19 @@ const LobbyPage = () => {
 
     useEffect(() => {
         getGames()
-    })
+    }, [])
 
     return (
         <Container fluid className={`vh-100 ${theme}`}>
             <UserNavBar />
-            <Table striped border='true' variant='dark'>
+            <Table striped border='true' variant={theme}>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Game</th>
                         <th># of Players</th>
-                        <th>Join</th>
+                        <th>Joinable?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,8 +44,8 @@ const LobbyPage = () => {
                             <th>{i+1}</th>
                             <th>{game.name}</th>
                             <th>{game.type}</th>
-                            <th>{game.players.length}</th>
-                            <th>join</th>
+                            <th>{game.players.length}/{game.numPlayers}</th>
+                            <th>Yes</th>
                         </tr>
                     ))}
                 </tbody>

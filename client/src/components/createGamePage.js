@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Stack from 'react-bootstrap/Stack'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
@@ -8,22 +9,24 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTheme from '../hooks/useTheme';
 import UserNavBar from './userNavBar';
+import useAuth from '../hooks/useAuth';
 
 const CreateGamePage = () => {
-    const url = "http://localhost:8081/users/register"
+    const url = "http://localhost:8081/games/create"
     const navigate = useNavigate()
-    const [form, setForm] = useState({username : "", email : "", password : ""})
+    const { auth } = useAuth()
+    const [form, setForm] = useState({name: "", type: "Just Chatting", numPlayers: "2", players: [auth.username]})
     const { theme } = useTheme()
 
     const updateForm = ({ target : input }) => {
         setForm({ ...form, [input.id] : input.value });
     }
 
-    const handleRegister = async (event) => {
+    const handleCreate = async (event) => {
         event.preventDefault()
         try {
             await axios.post(url, form)
-            navigate("/")
+            navigate("/lobby")
         }
         catch (error) {
             window.alert(error.response.data.message)
@@ -32,19 +35,20 @@ const CreateGamePage = () => {
 
     const handleCancel = async (event) => {
         event.preventDefault()
-        navigate("/")
+        navigate("/lobby")
     }
 
     return (
-        <Container fluid className={`vh-100 d-flex justify-content-center align-items-center ${theme}`}>
-            
+        <>
+        <UserNavBar />
+        <Container fluid className={`vh-100 d-flex align-items-center justify-content-center ${theme}`}>
             <Form>
-                <h2>Register Below!</h2>
+                <h2>Create Game</h2>
                 <Form.Group className='mb-3'>
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter username"
-                        id="username"
-                        value={ form.username }
+                        id="name"
+                        value={ form.name }
                         onChange={ updateForm }
                     />
                     <Form.Text>
@@ -52,28 +56,25 @@ const CreateGamePage = () => {
                     </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="text" placeholder="Enter email"
-                        id="email"
-                        value={ form.email }
-                        onChange={ updateForm }
-                    />
+                <Form.Label>Game Type</Form.Label>
+                    <Form.Select id='type' value={ form.type} onChange={ updateForm }>
+                        <option value="Just Chatting">Just Chatting</option>
+                        <option value="Tic-Tac-Toe">Tic-Tac-Toe</option>
+                        <option value="Connect-4">Connect-4</option>
+                    </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="text" placeholder="Enter password"
-                        id="password"
-                        value={ form.password }
-                        onChange={ updateForm }
-                    />
-                    <Form.Text>
-                        Password must be 8-20 characters long
-                    </Form.Text>
+                    <Form.Label># of Players</Form.Label>
+                    <Form.Select id='numPlayers' value={ form.numPlayers} onChange={ updateForm }>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                    </Form.Select>
                 </Form.Group>
                 <Row>
                     <Col>
-                    <Button type="primary" onClick={ handleRegister } className='custom-btn'>
-                        Submit
+                    <Button type="primary" onClick={ handleCreate } className='custom-btn'>
+                        Create
                     </Button>
                     </Col>
                     <Col>
@@ -84,6 +85,7 @@ const CreateGamePage = () => {
                 </Row>
             </Form>
         </Container>
+        </>
     )
 }
 

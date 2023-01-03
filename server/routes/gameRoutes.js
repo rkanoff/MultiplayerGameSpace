@@ -3,11 +3,12 @@ const router = express.Router()
 const newGameModel = require('../models/gameModel')
 
 router.post('/create', async (req, res) => {
-    const { name, type, players } = req.body
+    const { name, type, numPlayers, players } = req.body
 
     const newGame = new newGameModel({
         name: name,
         type: type,
+        numPlayers: numPlayers,
         players: players,
     })
 

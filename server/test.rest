@@ -33,9 +33,10 @@ POST http://localhost:8081/games/create
 Content-Type: application/json
 
 {
-    "name": "TestGame3",
+    "name": "TestGame1",
     "type": "Justwhatevs",
-    "players": ["player1","player2"]
+    "numPlayers": 2,
+    "players": ["player1"]
 }
 
 ###

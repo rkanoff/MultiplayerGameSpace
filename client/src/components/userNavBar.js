@@ -20,13 +20,14 @@ const UserNavBar = () => {
     }
 
     return (
-        <NavBar className={`custom-nav sticky ${theme}`}>
+        <NavBar className={`custom-nav ${theme}`}>
             <Container fluid>
                 <NavBar.Brand className='custom-nav'>Multiplayer Game Space</NavBar.Brand>
                 <NavBar.Collapse>
                     <Nav>    
-                        <Nav.Link className='custom-nav' href='/lobby'>Home</Nav.Link>   
-                        <Nav.Link className='custom-nav' onClick={ handleLogout }>Logout</Nav.Link>
+                        <Nav.Link className='custom-nav' href='/lobby'>Home </Nav.Link>   
+                        <Nav.Link className='custom-nav' href='/createGame'>Create Game</Nav.Link>
+                        <Nav.Link className='custom-nav' href='/lobby'>Refresh</Nav.Link>
                     </Nav>
                     <NavDropdown title='Options'>     
                         <ToggleButtonGroup type='radio' name='themeOption' defaultValue={theme} onChange={setTheme}>
@@ -38,6 +39,9 @@ const UserNavBar = () => {
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </NavDropdown>
+                    <Nav>
+                        <Nav.Link className='custom-nav' onClick={ handleLogout }>Logout</Nav.Link>
+                    </Nav>
                 </NavBar.Collapse>
                 <NavBar.Text className='custom-nav'>
                     You are logged in as: {auth.username}

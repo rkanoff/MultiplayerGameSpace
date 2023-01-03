@@ -10,8 +10,14 @@ const newGameModel = new mongoose.Schema({
         type: String,
         required: true,
     },
+    numPlayers: {
+        type: Number,
+        required: true,
+    },
     players: {
-        type: [String],
+        type: [{
+            type: String,
+        }],
         required: true,
     }
 })
