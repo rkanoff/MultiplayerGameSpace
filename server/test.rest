@@ -1,9 +1,11 @@
+###
+
 POST http://localhost:8081/users/register
 Content-Type: application/json
 
 {
-    "username": "rkanoff3",
-    "email": "rkanoff3@email.com",
+    "username": "rkanoff2",
+    "email": "rkanoff2@email.com",
     "password": "password"
 }
 
@@ -43,5 +45,24 @@ Content-Type: application/json
 
 GET http://localhost:8081/games/getAll
 Content-Type: application/json
+
+###
+
+POST http://localhost:8081/admin/createAdmin
+Content-Type: application/json
+
+{
+    "userId": "63b78864852ad3ed08912890",
+    "key": "0ba7ac6d7594116e279d6254d5897c10"
+}
+
+###
+
+POST http://localhost:8081/admin/removeGame
+Content-Type: application/json
+
+{
+    "gameId": "63b633b093fa76cfd9b53689"
+}
 
 ###

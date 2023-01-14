@@ -1,19 +1,19 @@
-import useTheme from '../hooks/useTheme'
+import useTheme from '../../context/themeProvider'
 import UserNavBar from './userNavBar'
 import Container from 'react-bootstrap/esm/Container'
 import Table from 'react-bootstrap/Table'
-import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 const LobbyPage = () => {
     const { theme } = useTheme()
     const axiosPrivate = useAxiosPrivate()
     const [games, setGames] = useState([])
-    const navigate = useNavigate()
 
     const getGames = async () => {
-        const res = await axiosPrivate
+        await axiosPrivate
             .get('http://localhost:8081/games/getAll')
             .then((res) => {
                 setGames(res.data)
@@ -23,11 +23,13 @@ const LobbyPage = () => {
 
     useEffect(() => {
         getGames()
-    }, [])
+    },[])
 
     return (
         <Container fluid className={`vh-100 ${theme}`}>
-            <UserNavBar />
+            <Row className='pb-2'>
+                <UserNavBar/>
+            </Row>
             <Table striped border='true' variant={theme}>
                 <thead>
                     <tr>
@@ -35,7 +37,11 @@ const LobbyPage = () => {
                         <th>Name</th>
                         <th>Game</th>
                         <th># of Players</th>
-                        <th>Joinable?</th>
+                        <th>
+                            <Button className='custom-btn' onClick={getGames} > 
+                                Refresh
+                            </Button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +51,11 @@ const LobbyPage = () => {
                             <th>{game.name}</th>
                             <th>{game.type}</th>
                             <th>{game.players.length}/{game.numPlayers}</th>
-                            <th>Yes</th>
+                            <th>
+                                <Button className='custom-btn' onClick={getGames} > 
+                                    Join
+                                </Button>
+                            </th>
                         </tr>
                     ))}
                 </tbody>

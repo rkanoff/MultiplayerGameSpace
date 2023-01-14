@@ -1,34 +1,9 @@
 const express = require('express')
+const verifyJWT = require('../middleware/verifyJWT')
+const gameController = require('../controllers/gameController')
 const router = express.Router()
-const newGameModel = require('../models/gameModel')
 
-router.post('/create', async (req, res) => {
-    const { name, type, numPlayers, players } = req.body
-
-    const newGame = new newGameModel({
-        name: name,
-        type: type,
-        numPlayers: numPlayers,
-        players: players,
-    })
-
-    try {
-        const saveNewGame = await newGame.save()
-        res.send(saveNewGame)
-    } 
-    catch (error) {
-        res.json(error)
-    }
-})
-
-router.get('/getAll', async (req, res) => {
-    try {
-        const games = await newGameModel.find()
-        res.send(games)
-    } 
-    catch (error) {
-        res.json(error)
-    }
-})
+router.route('/create').post(verifyJWT, gameController.create)
+router.route('/getAll').get(verifyJWT, gameController.getAll)
 
 module.exports = router

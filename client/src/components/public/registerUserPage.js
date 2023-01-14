@@ -6,26 +6,46 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useTheme from '../hooks/useTheme';
+import useTheme from '../../context/themeProvider';
+import { newUserValidation } from '../../models/userValidation'
 
 const RegisterUserPage = () => {
     const url = "http://localhost:8081/users/register"
     const navigate = useNavigate()
-    const [form, setForm] = useState({username : "", email : "", password : ""})
+    const [form, setForm] = useState({username: "", email: "", password: ""})
     const { theme } = useTheme()
+    const [errors, setErrors] = useState({ username: null, email: null, password: null })
 
     const updateForm = ({ target : input }) => {
         setForm({ ...form, [input.id] : input.value });
+        setErrors({ username: null, email: null, password: null })
+    }
+
+    const updateErrors = (error) => {
+        const newErrors = () =>  {
+            error.forEach(err => {
+                Object.assign(newErrors, ({[err.path]: err.message}))
+            })
+            return newErrors
+        }
+        setErrors(newErrors)
     }
 
     const handleRegister = async (event) => {
         event.preventDefault()
-        try {
-            await axios.post(url, form)
-            navigate("/")
-        }
-        catch (error) {
-            window.alert(error.response.data.message)
+        const { error } = newUserValidation(form)
+        if (error) updateErrors(Object.values(error.issues))
+        if (!error)
+        {
+            try {
+                await axios.post(url, form)
+                navigate("/")
+            }
+            catch (error) {
+                const name = error.response.data.message.split(' ')[0].toLowerCase()
+                if (error.response.status === 409 ) 
+                    setErrors({ ...errors, [name]: error.response.data.message})
+            }
         }
     }
 
@@ -44,7 +64,11 @@ const RegisterUserPage = () => {
                         id="username"
                         value={ form.username }
                         onChange={ updateForm }
+                        isInvalid={ errors.username }
                     />
+                    <Form.Control.Feedback type='invalid'>
+                        {errors.username}
+                    </Form.Control.Feedback>
                     <Form.Text>
                         Username must be 8-20 characters long
                     </Form.Text>
@@ -55,15 +79,23 @@ const RegisterUserPage = () => {
                         id="email"
                         value={ form.email }
                         onChange={ updateForm }
+                        isInvalid={ errors.email }
                     />
+                    <Form.Control.Feedback type='invalid'>
+                        {errors.email}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="text" placeholder="Enter password"
+                    <Form.Control type="password" placeholder="Enter password"
                         id="password"
                         value={ form.password }
                         onChange={ updateForm }
+                        isInvalid={ errors.password }
                     />
+                    <Form.Control.Feedback type='invalid'>
+                        {errors.password}
+                    </Form.Control.Feedback>
                     <Form.Text>
                         Password must be 8-20 characters long
                     </Form.Text>

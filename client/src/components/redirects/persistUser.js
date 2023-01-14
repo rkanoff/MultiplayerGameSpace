@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import useRefresh from '../hooks/useRefresh'
+import useRefresh from '../../hooks/useRefresh'
 
 const PersistUser = () => {
     const refresh = useRefresh()

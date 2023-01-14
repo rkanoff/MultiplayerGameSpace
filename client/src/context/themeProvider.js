@@ -1,7 +1,9 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState, useContext } from 'react'
 
+// create context for theme
 const ThemeContext = createContext()
 
+// create theme provider to wrap app
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark')
     
@@ -16,4 +18,9 @@ export const ThemeProvider = ({ children }) => {
     )
 }
 
-export default ThemeContext
+// import to use theme with component
+const useTheme = () => {
+    return(useContext(ThemeContext))
+}
+
+export default useTheme

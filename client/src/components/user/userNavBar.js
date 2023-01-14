@@ -1,13 +1,12 @@
 import Container from 'react-bootstrap/Container'
 import NavBar from 'react-bootstrap/NavBar'
 import Nav from 'react-bootstrap/Nav'
-import Col from 'react-bootstrap/Col'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import useAuth from '../hooks/useAuth'
-import useTheme from '../hooks/useTheme'
-import axios from '../api/axios'
+import useAuth from '../../context/authProvider'
+import useTheme from '../../context/themeProvider'
+import axios from 'axios'
 
 const UserNavBar = () => {
     const { auth, setAuth } = useAuth()
@@ -19,6 +18,22 @@ const UserNavBar = () => {
         setAuth()
     }
 
+    const AdminLinks = () => {
+        if (auth.isAdmin) {
+            return (
+                <>
+                <Nav.Link className='custom-nav' href='/adminLobby'>Lobby(Admin only)</Nav.Link>
+                <Nav.Link className='custom-nav' href='/adminUsers'>User List(Admin only)</Nav.Link>
+                </>
+            )
+        }
+        else {
+            return (
+                <></>
+            )
+        }
+    }
+
     return (
         <NavBar className={`custom-nav ${theme}`}>
             <Container fluid>
@@ -27,7 +42,8 @@ const UserNavBar = () => {
                     <Nav>    
                         <Nav.Link className='custom-nav' href='/lobby'>Home </Nav.Link>   
                         <Nav.Link className='custom-nav' href='/createGame'>Create Game</Nav.Link>
-                        <Nav.Link className='custom-nav' href='/lobby'>Refresh</Nav.Link>
+                        <Nav.Link className='custom-nav' href='/chatRoom'>Chat Room</Nav.Link>
+                        <AdminLinks />
                     </Nav>
                     <NavDropdown title='Options'>     
                         <ToggleButtonGroup type='radio' name='themeOption' defaultValue={theme} onChange={setTheme}>

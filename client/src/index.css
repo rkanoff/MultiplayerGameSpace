@@ -2,19 +2,23 @@
     background-color: #333;
     color: #fff;
     transition: all .3s;
-    --buttonBG: #4169E1;
+    --buttonBG: #2874A6;
     --linkC: #87CEFA;
     --navBG: #4e5861;
     --navC: #fff;
     --tableTheme: dark;
+    --navDD: #333;
+    --modBG: #333;
 }
 .light {
-    background-color: #fff;
+    background-color: #E2E3E3;
     color: #333;
     transition: all .3s;
-    --buttonBG: #4169E1;
+    --buttonBG: #3498DB ;
     --linkC: #4169E1;
+    --navBG: #FFF;       
     --tableTheme: light;
+    --navDD: #E2E3E3;
 }
 .custom-btn {
     background-color: var(--buttonBG);
@@ -29,5 +33,22 @@
     position: sticky;
 }
 .dropdown-menu {
-    background-color: #333;
+    background-color: var(--navDD);
+}
+.custom-h10 {
+    height: 10%;
+}
+.custom-h90 {
+    height: 90%;
+}
+.modal-header {
+    background-color: var(--modBG);
+    border-color: var(--modBG);
+}
+.modal-body {
+    background-color: var(--modBG);
+}
+.modal-footer {
+    background-color: var(--modBG);
+    border-color: var(--modBG);
 }

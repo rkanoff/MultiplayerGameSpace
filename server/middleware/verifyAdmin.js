@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
+const jwt_decode = require('jwt-decode')
 require('dotenv').config()
 
-const verifyJWT = (req, res, next) => {
+const verifyAdmin = (req, res, next) => {
     // retrieve authheader, validate and retrieve token
     const authHeader = req.headers['authorization']
     if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ message: 'Unauthorized' })
@@ -11,10 +12,11 @@ const verifyJWT = (req, res, next) => {
         accessToken,
         process.env.ACCESS_TOKEN_SECRET,
         (err) => {
-            if (err) return res.status(403).json({ message: 'Forbidden' })
+            if (!err) decoded = jwt_decode(accessToken)
+            if (err || !decoded?.userInfo.isAdmin) return res.status(403).json({ message: 'Forbidden' })
             next()
-        }   
+        }
     )
 }
 
-module.exports = verifyJWT
+module.exports = verifyAdmin
