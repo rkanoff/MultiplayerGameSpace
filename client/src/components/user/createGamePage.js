@@ -15,13 +15,16 @@ const CreateGamePage = () => {
     const url = "http://localhost:8081/games/create"
     const navigate = useNavigate()
     const { auth } = useAuth()
-    const [form, setForm] = useState({name: "", type: "Just Chatting", numPlayers: 2, players: [auth.username]})
+    const [form, setForm] = useState({name: "", type: "Just Chatting", numPlayers: 2, players: []})
     const { theme } = useTheme()
     const axiosPrivate = useAxiosPrivate()  
     const [errors, setErrors] = useState({name: null})
 
     const updateForm = ({ target : input }) => {
-        setForm({ ...form, [input.id] : input.value });
+        if (input.id === 'numPlayers')    
+            setForm({ ...form, [input.id] : parseInt(input.value) })
+        else
+            setForm({ ...form, [input.id] : input.value })
         setErrors({ name: null })
     }   
 
@@ -34,7 +37,6 @@ const CreateGamePage = () => {
     const handleCreate = async (event) => {
         event.preventDefault()
         const { error } = newGameValidation(form)
-        console.log(error.issues)
         if (error) updateErrors(Object.values(error.issues))
         if(!error)
         {

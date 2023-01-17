@@ -12,3 +12,4 @@ Placeholder
    - REFRESH_TOKEN_SECRET='insert secure token secret here'
 5. Run 'npm start' command in terminal at multiplayergamespace/server to start server
 6. Run 'npm start' command in terminal at multiplayergamespace/client to start react app
+7. Run 'npm run socket' comand in terminal at multiplayergamespace/server to start web socket server

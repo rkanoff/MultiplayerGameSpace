@@ -7,10 +7,13 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import useAuth from '../../context/authProvider'
 import useTheme from '../../context/themeProvider'
 import axios from 'axios'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const UserNavBar = () => {
     const { auth, setAuth } = useAuth()
     const { theme, setTheme } = useTheme()
+    const navigate = useNavigate()
 
     const handleLogout = async (event) => {
         event.preventDefault()
@@ -22,8 +25,8 @@ const UserNavBar = () => {
         if (auth.isAdmin) {
             return (
                 <>
-                <Nav.Link className='custom-nav' href='/adminLobby'>Lobby(Admin only)</Nav.Link>
-                <Nav.Link className='custom-nav' href='/adminUsers'>User List(Admin only)</Nav.Link>
+                <Nav.Link className='custom-nav' onClick={() => navigate('/adminLobby')}>Lobby(Admin only)</Nav.Link>
+                <Nav.Link className='custom-nav' onClick={() => navigate('/adminUsers')}>User List(Admin only)</Nav.Link>
                 </>
             )
         }
@@ -40,9 +43,8 @@ const UserNavBar = () => {
                 <NavBar.Brand className='custom-nav'>Multiplayer Game Space</NavBar.Brand>
                 <NavBar.Collapse>
                     <Nav>    
-                        <Nav.Link className='custom-nav' href='/lobby'>Home </Nav.Link>   
-                        <Nav.Link className='custom-nav' href='/createGame'>Create Game</Nav.Link>
-                        <Nav.Link className='custom-nav' href='/chatRoom'>Chat Room</Nav.Link>
+                        <Nav.Link className='custom-nav' onClick={() => navigate('/lobby')}>Lobby</Nav.Link>   
+                        <Nav.Link className='custom-nav' onClick={() => navigate('/createGame')}>Create Game</Nav.Link>
                         <AdminLinks />
                     </Nav>
                     <NavDropdown title='Options'>     

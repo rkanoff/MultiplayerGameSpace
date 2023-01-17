@@ -3,7 +3,7 @@ const { newGameValidation } = require ('../models/gameValidation')
 const asyncHandler = require('express-async-handler')
 
 // create new game
-const create = asyncHandler(async (req, res) => {
+const create = asyncHandler( async (req, res) => {
     // validate game information
     const { error } = newGameValidation(req.body)
     if (error) return res.status(400).send({ message: error.errors[0].message })
@@ -28,7 +28,7 @@ const create = asyncHandler(async (req, res) => {
 })
 
 // return list of all games
-const getAll = asyncHandler(async (req, res) => {
+const getAll = asyncHandler( async (req, res) => {
     const games = await newGameModel.find()
      
     if (games)
@@ -37,7 +37,46 @@ const getAll = asyncHandler(async (req, res) => {
         res.status(400).send({ message: 'Error retrieving game list' })
 })
 
+// add player to game
+const addPlayer = asyncHandler( async(req, res) => {
+    const { username, gameId } = req.body
+
+    newGameModel.findByIdAndUpdate(gameId, {$push: {players: username}},
+        function (error) {
+            if (error)
+                res.status(400).send({ message: 'Error joining game'})
+            else 
+                res.json({ message: 'Game joined'})
+        })
+})
+
+// remove player from game
+const removePlayer = asyncHandler( async(req, res) => {
+    const { username, gameId } = req.body
+
+    newGameModel.findByIdAndUpdate(gameId, {$pull: {players: username}},
+        function (error) {
+            if (error)
+                res.status(400).send({ message: error.message})
+            else 
+                res.json({ message: 'Game left'})
+        })
+})
+
+// return list of players in game
+const playerList = asyncHandler( async(req, res) => {
+    const { gameId } = req.query
+
+    const game = await newGameModel.findById(gameId)
+
+    if (!game) res.status(400).send({ message: 'Game not found'})
+    else res.json(game.players)
+})
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    addPlayer,
+    removePlayer,
+    playerList
 }

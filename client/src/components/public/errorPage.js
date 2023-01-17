@@ -2,9 +2,26 @@ import Stack from 'react-bootstrap/Stack'
 import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
 import useTheme from '../../context/themeProvider'
+import { useNavigate } from 'react-router-dom'
+import useAuth from '../../context/authProvider'
 
 const ErrorPage = () => {
     const { theme } = useTheme()
+    const navigate = useNavigate()
+    const { auth } = useAuth()
+
+    const ReturnLink = () => {
+        if (auth?.username) {
+            return (
+                <Nav.Link className='custom-link' onClick={() => navigate('/lobby')}>Return to Homepage</Nav.Link>
+            )
+        }
+        else {
+            return (
+                <Nav.Link className='custom-link' onClick={() => navigate('/')}>Return to Homepage</Nav.Link>
+            )
+        }
+    }
 
     return (
         <Container fluid className={`vh-100 d-flex ${theme}`}>
@@ -12,9 +29,7 @@ const ErrorPage = () => {
                         <h1 className='display-1'>404 Error</h1>
                         <h2>Page not found</h2>
                         <h2>(╯°□°)╯︵ ┻━┻</h2>
-                        <Nav.Item>
-                            <Nav.Link className='custom-link' href='/'>Return to Homepage</Nav.Link>
-                        </Nav.Item>
+                        <ReturnLink />
                     </Stack>                   
         </Container>
     )

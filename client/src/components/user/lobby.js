@@ -5,12 +5,16 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import useAuth from '../../context/authProvider'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LobbyPage = () => {
     const { theme } = useTheme()
     const axiosPrivate = useAxiosPrivate()
     const [games, setGames] = useState([])
+    const { auth, setAuth } = useAuth()
+    const navigate = useNavigate()
 
     const getGames = async () => {
         await axiosPrivate
@@ -18,7 +22,15 @@ const LobbyPage = () => {
             .then((res) => {
                 setGames(res.data)
             })
-            .catch((error) =>  console.log(error))
+            .catch((error) => console.log(error))
+    }
+
+    const joinGame = async (gameId) => {
+        await axiosPrivate.post('http://localhost:8081/games/addPlayer', { username: auth.username, gameId: gameId })
+        setAuth(prev => {
+            return {...prev, connected: true, gameId: gameId}
+        })
+        navigate('/chatroom')
     }
 
     useEffect(() => {
@@ -52,7 +64,7 @@ const LobbyPage = () => {
                             <th>{game.type}</th>
                             <th>{game.players.length}/{game.numPlayers}</th>
                             <th>
-                                <Button className='custom-btn' onClick={getGames} > 
+                                <Button className='custom-btn' onClick={() => joinGame(game._id)} > 
                                     Join
                                 </Button>
                             </th>

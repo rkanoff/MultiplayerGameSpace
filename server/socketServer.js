@@ -1,6 +1,5 @@
 const { Server } = require('socket.io')
 const { createServer } = require('http')
-const { isNullOrUndefined } = require('util')
 const httpServer = createServer()
 const PORT = 8082
 
@@ -11,8 +10,13 @@ const io = new Server(httpServer, {
     }
 })  
 
+io.use((socket, next) => {
+    socket.gameId = socket.handshake.auth.gameId
+    next()
+})
+
 io.on('connection', (socket) => {
-    console.log('a user connected')
+    socket.join(socket.gameId)
 
     socket.on('disconnect', () => {
         console.log('a user disconnected')
@@ -20,7 +24,7 @@ io.on('connection', (socket) => {
     })
 
     socket.onAny((eventName, ...args) => {
-        io.emit(eventName, args)
+        io.to(socket.gameId).emit(eventName, args)
     })
 })
 

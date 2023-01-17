@@ -38,7 +38,7 @@ Content-Type: application/json
     "name": "TestGame1",
     "type": "Justwhatevs",
     "numPlayers": 2,
-    "players": ["player1"]
+    "players": []
 }
 
 ###
@@ -63,6 +63,31 @@ Content-Type: application/json
 
 {
     "gameId": "63b633b093fa76cfd9b53689"
+}
+
+###
+
+GET http://localhost:8081/games/playerList?gameId=63b64312d46cff80546d8bd7
+Content-Type: application/json
+
+###
+
+POST http://localhost:8081/games/addPlayer
+Content-Type: application/json
+
+{
+    "username": "rkanoff2",
+    "gameId": "63c44bfb68e08e9c4bf03ea4"
+}
+
+###
+
+POST http://localhost:8081/games/removePlayer
+Content-Type: application/json
+
+{
+    "username": "rkanoff2",
+    "gameId": "63c44c0468e08e9c4bf03ea9"
 }
 
 ###
