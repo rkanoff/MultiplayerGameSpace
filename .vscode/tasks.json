@@ -1,0 +1,56 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Client Build",
+            "type": "shell",
+            "command": "npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/client"
+            }
+        },
+        {
+            "label": "TestApp Build",
+            "type": "shell",
+            "command": "npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/testapp"
+            }
+        },
+        {
+            "label": "TestServer Build",
+            "type": "shell",
+            "command": "npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/testserver"
+            }
+        },
+        {
+            "label": "Socket Build",
+            "type": "shell",
+            "command": "npm run socket",
+            "options": {
+                "cwd": "${workspaceFolder}/server"
+            }
+        },
+        {
+            "label": "Server Build",
+            "type": "shell",
+            "command": "npm run dev",
+            "options": {
+                "cwd": "${workspaceFolder}/server"
+            }
+        },
+        {
+            "label": "Build",
+            "dependsOn": [
+                "Server Build",
+                "Socket Build",
+                "Client Build",
+                "TestServer Build",
+                "TestApp Build"
+            ],
+            "problemMatcher": []
+        }
+    ]
+  }

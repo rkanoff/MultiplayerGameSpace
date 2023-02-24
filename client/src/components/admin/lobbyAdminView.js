@@ -32,9 +32,7 @@ const AdminLobbyPage = () => {
 
     return (
         <Container fluid className={`vh-100 ${theme}`}>
-            <Row className='pb-2'>
-                <UserNavBar/>
-            </Row>
+            <UserNavBar/>
             <Table striped border='true' variant={theme}>
                 <thead>
                     <tr>

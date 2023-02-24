@@ -1,6 +1,8 @@
 const newGameModel = require('../models/gameModel')
+const newAppModel = require('../models/appModel')
 const { newGameValidation } = require ('../models/gameValidation')
 const asyncHandler = require('express-async-handler')
+const axios = require('axios')
 
 // create new game
 const create = asyncHandler( async (req, res) => {
@@ -21,8 +23,9 @@ const create = asyncHandler( async (req, res) => {
 
     const saveNewGame = await newGame.save()
 
-    if (saveNewGame)
+    if (saveNewGame) {
         res.send(saveNewGame)
+    }
     else
         res.status.send({ message: 'Error creating new game' })
 })
@@ -45,8 +48,9 @@ const addPlayer = asyncHandler( async(req, res) => {
         function (error) {
             if (error)
                 res.status(400).send({ message: 'Error joining game'})
-            else 
+            else {
                 res.json({ message: 'Game joined'})
+            }
         })
 })
 
@@ -73,10 +77,40 @@ const playerList = asyncHandler( async(req, res) => {
     else res.json(game.players)
 })
 
+// Add external app to list
+const registerApp = asyncHandler(async(req, res) => {
+    const { name, maxPlayers, gameAddress, serverAddress } = req.body
+    
+    const newApp = newAppModel({
+        name: name,
+        maxPlayers: maxPlayers,
+        gameAddress: gameAddress,
+        serverAddress: serverAddress
+    })
+
+    const saveNewApp = await newApp.save()
+
+    if (saveNewApp)
+        res.send(saveNewApp)
+    else
+        res.status.send({ message: 'Error registering new app.' })
+})
+
+const getAppList = asyncHandler(async(req, res) => {
+    const apps = await newAppModel.find()
+     
+    if (apps)
+        res.send(apps)
+    else
+        res.status(400).send({ message: 'Error retrieving game list' })
+})
+
 module.exports = {
     create,
     getAll,
     addPlayer,
     removePlayer,
-    playerList
+    playerList,
+    registerApp,
+    getAppList
 }

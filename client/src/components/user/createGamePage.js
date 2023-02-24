@@ -2,8 +2,9 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
+import Stack from 'react-bootstrap/Stack'
 import Button from 'react-bootstrap/Button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useTheme from '../../context/themeProvider'
 import UserNavBar from './userNavBar'
@@ -19,6 +20,20 @@ const CreateGamePage = () => {
     const { theme } = useTheme()
     const axiosPrivate = useAxiosPrivate()  
     const [errors, setErrors] = useState({name: null})
+    const [games, setGames] = useState([])
+
+    useEffect(() => {
+        getGames()
+    },[])
+
+    const getGames = async () => {
+        await axiosPrivate
+            .get('http://localhost:8081/games/getAppList')
+            .then((res) => {
+                setGames(res.data)
+            })
+            .catch((error) => console.log(error))
+    }
 
     const updateForm = ({ target : input }) => {
         if (input.id === 'numPlayers')    
@@ -57,53 +72,51 @@ const CreateGamePage = () => {
 
     return (
         <Container fluid className={`vh-100 ${theme}`}>
-            <Row className='custom-h10 row justify-content-center pb-2'>
-                <UserNavBar/>
-            </Row>
-            <Container className='custom-h90 d-flex align-items-center justify-content-center'>
-            <Form>
-                <h2>Create Game</h2>
-                <Form.Group className='mb-3'>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter name"
-                        id="name"
-                        value={ form.name }
-                        onChange={ updateForm }
-                        isInvalid={ errors.name } 
-                    />
-                    <Form.Control.Feedback type='invalid'>
-                        { errors.name }
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                <Form.Label>Game Type</Form.Label>
-                    <Form.Select id='type' value={ form.type} onChange={ updateForm }>
-                        <option value="Just Chatting">Just Chatting</option>
-                        <option value="Tic-Tac-Toe">Tic-Tac-Toe</option>
-                        <option value="Connect-4">Connect-4</option>
-                    </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label># of Players</Form.Label>
-                    <Form.Select id='numPlayers' value={ form.numPlayers} onChange={ updateForm }>
-                        <option value={2}>2</option>
-                        <option value={4}>4</option>
-                        <option value={8}>8</option>
-                    </Form.Select>
-                </Form.Group>
-                <Row>
-                    <Col>
-                    <Button type="primary" onClick={ handleCreate } className='custom-btn'>
-                        Create
-                    </Button>
-                    </Col>
-                    <Col>
-                    <Button type="cancel" onClick={ handleCancel } className='custom-btn'>
-                        Cancel
-                    </Button>
-                    </Col>
-                </Row>
-            </Form>
+            <UserNavBar/>
+            <Container className={`custom-h90 d-flex align-items-center justify-content-center`}>  
+                <Form>
+                    <h2>Create Game</h2>
+                    <Form.Group className='mb-3'>
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter name"
+                            id="name"
+                            value={ form.name }
+                            onChange={ updateForm }
+                            isInvalid={ errors.name } 
+                        />
+                        <Form.Control.Feedback type='invalid'>
+                            { errors.name }
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                    <Form.Label>Game Type</Form.Label>
+                        <Form.Select id='type' value={ form.type} onChange={ updateForm }>
+                            {games.map((game, i) => (    
+                                <option key={game._id} value={game.name}>{game.name}</option>
+                            ))}
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label># of Players</Form.Label>
+                        <Form.Select id='numPlayers' value={ form.numPlayers} onChange={ updateForm }>
+                            <option value={2}>2</option>
+                            <option value={4}>4</option>
+                            <option value={8}>8</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Row>
+                        <Col>
+                        <Button type="primary" onClick={ handleCreate } className='custom-btn'>
+                            Create
+                        </Button>
+                        </Col>
+                        <Col>
+                        <Button type="cancel" onClick={ handleCancel } className='custom-btn'>
+                            Cancel
+                        </Button>
+                        </Col>
+                    </Row>
+                </Form>
             </Container>
         </Container>
     )

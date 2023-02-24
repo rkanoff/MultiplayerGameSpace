@@ -8,5 +8,7 @@ router.route('/getAll').get(verifyJWT, gameController.getAll)
 router.route('/addPlayer').post(verifyJWT, gameController.addPlayer)
 router.route('/removePlayer').post(verifyJWT, gameController.removePlayer)
 router.route('/playerList').get(verifyJWT, gameController.playerList)
+router.route('/registerApp').post(gameController.registerApp)
+router.route('/getAppList').get(gameController.getAppList)
 
 module.exports = router

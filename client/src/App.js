@@ -11,7 +11,7 @@ import LobbyPage from './components/user/lobby'
 import CreateGamePage from './components/user/createGamePage'
 import AdminLobbyPage from './components/admin/lobbyAdminView'
 import AdminUsersPage from './components/admin/usersAdminView'
-import ChatRoom from './components/user/chatRoom'
+import GameRoom from './components/user/gameRoom'
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
           <Route path='/lobby' element={ <LobbyPage /> } />
           <Route path='/createGame' element={ <CreateGamePage /> } />
           <Route element={ <RequireConnect />}>
-            <Route path='/chatRoom' element= { <ChatRoom /> } />
+            <Route path='/gameRoom' element= { <GameRoom /> } />
           </Route>
             <Route element={ <RequireAdmin /> }>
               <Route path='/adminLobby' element={ <AdminLobbyPage /> } />
@@ -35,7 +35,7 @@ function App() {
         </Route>
       </Route>
     </Routes>
-  );
+  )
 }
 
 export default App

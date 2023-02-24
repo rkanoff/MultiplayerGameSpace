@@ -30,7 +30,7 @@ const LobbyPage = () => {
         setAuth(prev => {
             return {...prev, connected: true, gameId: gameId}
         })
-        navigate('/chatroom')
+        navigate('/gameroom')
     }
 
     useEffect(() => {
@@ -39,13 +39,10 @@ const LobbyPage = () => {
 
     return (
         <Container fluid className={`vh-100 ${theme}`}>
-            <Row className='pb-2'>
-                <UserNavBar/>
-            </Row>
+            <UserNavBar/>
             <Table striped border='true' variant={theme}>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Game</th>
                         <th># of Players</th>
@@ -59,7 +56,6 @@ const LobbyPage = () => {
                 <tbody>
                     {games.map((game, i) => (
                         <tr key={game._id}>
-                            <th>{i+1}</th>
                             <th>{game.name}</th>
                             <th>{game.type}</th>
                             <th>{game.players.length}/{game.numPlayers}</th>

@@ -30,7 +30,6 @@
 .custom-nav {
     background-color: var(--navBG);
     color: var(--navC);
-    position: sticky;
 }
 .dropdown-menu {
     background-color: var(--navDD);

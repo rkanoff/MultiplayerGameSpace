@@ -1,5 +1,4 @@
 import useTheme from '../../context/themeProvider'
-import UserNavBar from '../user/userNavBar'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -78,20 +77,15 @@ const ChatRoom = () => {
     }
 
     return (
-        <Container fluid className={`vh-100 ${theme}`}>
-            <Row className='pb-2'>
-                <UserNavBar/>
-            </Row>
+        <Container fluid className={`${theme}`}>
             <Container className=''>
                 <Form>
                     <Row>
-                    <Col>
-
+                    <Col xs='8' md='9'>
                     <Form.Group className='mb-3' controlId='messageArea'>
                     <Form.Label className='row justify-content-center'>Chat</Form.Label>
-                        <Form.Control ref={mesRef} as='textarea' rows={10} readOnly value={ allMessages.toString().replaceAll(',', '\n') }/>
+                        <Form.Control ref={mesRef} as='textarea' rows={15} readOnly value={ allMessages.toString().replaceAll(',', '\n') }/>
                     </Form.Group>
-                    
                     <Form.Group className='mb-3'>
                         <Form.Control type='text' placeholder='Enter message here'
                             id='message'
@@ -99,13 +93,12 @@ const ChatRoom = () => {
                             onChange={ updateForm } 
                         />  
                     </Form.Group>
-
                     </Col>
-                    <Col xs='auto'>
 
+                    <Col xs=''>
                     <Form.Group className='mb-3 overflow-y' controlId='userArea'>
                     <Form.Label className='row justify-content-center'>Player List</Form.Label>
-                        <Form.Control as='textarea' rows={10} readOnly value={ playerList.toString().replaceAll(',', '\n') }/>
+                        <Form.Control as='textarea' rows={15} readOnly value={ playerList.toString().replaceAll(',', '\n') }/>
                     </Form.Group>
                     <Row>
                     <Col>
