@@ -7,12 +7,14 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import useAuth from '../../context/authProvider'
 import useTheme from '../../context/themeProvider'
+import Fade from 'react-bootstrap/Fade'
+import Image from 'react-bootstrap/Image'
 
 const LandingPage = () => {
     const navigate = useNavigate()
@@ -21,6 +23,8 @@ const LandingPage = () => {
     const { setAuth } = useAuth()
     const { theme, setTheme } = useTheme()
     const [errors, setErrors] = useState({username: null, password: null})
+    const [open, setOpen] = useState(true);
+    const [currImg, setCurrImg] = useState(true);
 
     const updateForm = async ({ target : input}) => {
         setForm({ ...form, [input.id] : input.value })
@@ -29,6 +33,7 @@ const LandingPage = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault()
+
         try {
             const { data: res } = await axios.post(url, form, { withCredentials: true })
             const { accessToken } = res
@@ -47,10 +52,49 @@ const LandingPage = () => {
         navigate("/register")
     }
 
+    const timer = () => {
+        const timer1 = setTimeout(() => {
+            setOpen(false)
+            const timer2 = setTimeout(() => {
+                setCurrImg(!currImg)
+                setOpen(true)
+            }, 1600)
+            return () => clearTimeout(timer2);
+        }, 5000)
+        return () => clearTimeout(timer1);
+    }
+
+    const Images = () => {
+        if (currImg) {
+            return (
+                <>
+                <h1 className='display-5'>Tic-Tac-Toe: X's vs O's!</h1>
+                <img src={require('../../Tic_tac_toe.svg.png')} className='customImg' alt='tictactoe' />
+                <h1 className='display-5'>Rumble in the 3x3 Jungle!</h1>
+                </>
+            )
+        }
+
+        if (!currImg) {
+            return (
+                <>
+                <h1 className='display-5'>The Counter Game!</h1>
+                <img src={require('../../clipart3575.png')} style={{ width: 400, height: 500 }} className='customImg' alt='counter' />
+                <h1 className='display-5'>Family Friendly Fun!</h1>
+                </>
+            )
+        }
+    }
+
+    useEffect(() => {
+        timer()
+    }, [currImg])
+
     return (
         <Container fluid className={`vh-100 d-flex align-items-center ${theme}`}>
             <Col>
                 <Stack className='align-items-center'>
+                    <h1 className='display-4 mb-5 customTitle' >Multiplayer Game Space</h1>
                     <Form className='w-50'>
                         <h2>Login</h2>
                         <Form.Group className="mb-3">
@@ -91,16 +135,24 @@ const LandingPage = () => {
                             </ToggleButtonGroup>
                             </Col>
                         </Row>
+                        <Nav.Item>
+                            <Nav.Link className='custom-link mt-3' onClick={ handleRegister }>New user? Register here!</Nav.Link>
+                    </Nav.Item>
                     </Form>
                 </Stack>
             </Col>
             <Col>
-                <Stack className='d-flex align-items-center'>
-                    <h1 className='display-4'>Multiplayer Game Space</h1>
-                    <Nav.Item>
-                            <Nav.Link style={{fontSize:"28px"}} className='custom-link' onClick={ handleRegister }>New user? Register here!</Nav.Link>
-                    </Nav.Item>
-                </Stack>
+                <Fade in={open} appear className='customFade'>
+                    <Stack 
+                    className='d-flex align-items-center' 
+                    id="example-fade-text"
+                    onClick={() => setOpen(!open)}
+                    aria-controls="example-fade-text"
+                    aria-expanded={open}
+                    >
+                        <Images />
+                    </Stack>
+                </Fade>
             </Col>
         </Container>
     )

@@ -16,7 +16,7 @@ const CreateGamePage = () => {
     const url = "http://localhost:8081/games/create"
     const navigate = useNavigate()
     const { auth } = useAuth()
-    const [form, setForm] = useState({name: "", type: "Just Chatting", numPlayers: 2, players: []})
+    const [form, setForm] = useState({name: "", type: "The Counter Game", numPlayers: 2, players: []})
     const { theme } = useTheme()
     const axiosPrivate = useAxiosPrivate()  
     const [errors, setErrors] = useState({name: null})

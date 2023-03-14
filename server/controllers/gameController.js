@@ -81,6 +81,9 @@ const playerList = asyncHandler( async(req, res) => {
 const registerApp = asyncHandler(async(req, res) => {
     const { name, maxPlayers, gameAddress, serverAddress } = req.body
     
+    const checkApp = await newAppModel.findOne({ name: name})
+    if (checkApp) return res.send({ message: 'App already registered.' })
+
     const newApp = newAppModel({
         name: name,
         maxPlayers: maxPlayers,
@@ -105,6 +108,21 @@ const getAppList = asyncHandler(async(req, res) => {
         res.status(400).send({ message: 'Error retrieving game list' })
 })
 
+const getAppAddress = asyncHandler(async(req, res) => {
+    const { gameId } = req.query
+
+    const game = await newGameModel.findById(gameId)
+    if (!game)
+        res.status(400).send({ message: 'Error retrieving gameId' })
+
+    const app = await newAppModel.find({ name: game.type })
+    if (app) {
+        res.send(app)
+    } 
+    else
+        res.status(400).send({ message: 'Error retrieving game list' })
+})
+
 module.exports = {
     create,
     getAll,
@@ -112,5 +130,6 @@ module.exports = {
     removePlayer,
     playerList,
     registerApp,
-    getAppList
+    getAppList,
+    getAppAddress
 }

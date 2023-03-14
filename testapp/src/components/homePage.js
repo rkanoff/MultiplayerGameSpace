@@ -2,42 +2,41 @@ import { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
+import { io } from 'socket.io-client'
 
 const HomePage = () => {
     const [counter, setCounter] = useState(-1)
-
-    useEffect(() => {
-        
-    })
+    const [connection, setConnection] = useState()
 
     const queryString = window.location.search;
-    console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
     const name = urlParams.get('username')
     const gameId = urlParams.get('gameId')
 
+    useEffect(() => {
+        const socket = io('localhost:8082', { auth: { gameId: gameId }})
+        setConnection(socket)
+
+        socket.on('counter', (message) => {
+            getCounter()
+        })
+
+        getCounter()
+    }, [])
 
     const getCounter = async () => {
         await axios.get
             ('http://localhost:8091/test/getCache', { params: { gameId: gameId }})
             .then((res) => {
                 setCounter(res.data)
-                console.log(res.data)
             })
             .catch((error) => console.log(error))
     }
 
     const iterateCounter = async () => {
         await axios.post('http://localhost:8091/test/setCache', { gameId: gameId})
+        connection.emit('counter', counter+1)
     }
-
-    const poll = async () => {
-        getCounter()
-        await new Promise(r => setTimeout(r, 5000))
-        console.log('check')
-        poll()
-    }
-    poll()
 
     return (
         <Container>

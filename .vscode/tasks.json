@@ -18,6 +18,22 @@
             }
         },
         {
+            "label": "TicTacToeServer Build",
+            "type": "shell",
+            "command": "npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/tic-tac-toe-server"
+            }
+        },
+        {
+            "label": "TicTacToeApp Build",
+            "type": "shell",
+            "command": "npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/tic-tac-toe-react"
+            }
+        },
+        {
             "label": "TestServer Build",
             "type": "shell",
             "command": "npm start",
@@ -48,7 +64,9 @@
                 "Socket Build",
                 "Client Build",
                 "TestServer Build",
-                "TestApp Build"
+                "TestApp Build",
+                "TicTacToeServer Build",
+                "TicTacToeApp Build"
             ],
             "problemMatcher": []
         }

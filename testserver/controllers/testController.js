@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler')
 const NodeCache = require('node-cache')
-
 const myCache = new NodeCache({})
 
 const receiveGame = asyncHandler( async(req, res) => {
@@ -27,14 +26,11 @@ const updateCache = asyncHandler(async (req, res) => {
 const getCache = asyncHandler(async (req, res) => {
     const { gameId } = req.query
 
-    console.log(gameId)
-
     const counter = myCache.get(gameId)
     if (!counter) {
         myCache.set(gameId, 0)
     }
     const counter2 = myCache.get(gameId)
-    console.log(counter2)
     res.send(JSON.stringify(counter2))
 })
 

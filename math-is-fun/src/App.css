@@ -1,0 +1,17 @@
+#root {
+  height: 100vh;
+  width: 100%;
+  padding: 0rem;
+  margin: 0rem;
+  text-align: center;
+  color-scheme: dark;
+  color: ivory;
+}
+
+.h-70 {
+  height: 70%;
+}
+
+.h-15 {
+  height: 15%;
+}

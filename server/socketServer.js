@@ -2,10 +2,11 @@ const { Server } = require('socket.io')
 const { createServer } = require('http')
 const httpServer = createServer()
 const PORT = 8082
+const whiteList = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002']
 
 const io = new Server(httpServer, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: whiteList,
         credentials: true
     }
 })  
@@ -19,7 +20,6 @@ io.on('connection', (socket) => {
     socket.join(socket.gameId)
 
     socket.on('disconnect', () => {
-        console.log('a user disconnected')
         socket.removeAllListeners()
     })
 

@@ -1,0 +1,84 @@
+:root {
+	--board-background: none;
+	--border-color: #f6546a;
+	--border-thickness: 5px;
+}
+
+.board{
+	width: 30vw;
+	height: 50%;
+	background-color: var(--board-background);
+	display: flex;
+	align-items: flex-start;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.input{
+	height: 33.33%;
+	width: 33.33%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: whitesmoke;
+	font-family: 'Bellefair', serif;
+	font-style: italic;
+	font-weight: 300;
+	font-size: 4rem;
+}
+
+.input-1{
+	border-right: var(--border-thickness)
+	dashed var(--border-color);
+	border-bottom: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-2{
+	border-right: var(--border-thickness)
+	dashed var(--border-color);
+	border-bottom: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-3{
+	border-bottom: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-4{
+	border-right: var(--border-thickness)
+	dashed var(--border-color);
+	border-bottom: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-5{
+	border-right: var(--border-thickness)
+	dashed var(--border-color);
+	border-bottom: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-6{
+	border-bottom: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-7{
+	border-right: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}
+
+.input-8{
+	border-right: var(--border-thickness)
+	dashed var(--border-color);
+	flex: auto;
+}

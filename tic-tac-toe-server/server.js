@@ -2,13 +2,13 @@ const express = require('express')
 const axios = require('axios')
 const cors = require('cors')
 const app = express()
-const PORT = 8091
+const PORT = 8092
 
 const data = {
-    name: 'The Counter Game', 
-    maxPlayers: 4, 
-    gameAddress: 'http://localhost:3001/', 
-    serverAddress: 'http://localhost:8091/'
+    name: 'Tic-Tac-Toe', 
+    maxPlayers: 2, 
+    gameAddress: 'http://localhost:3002/', 
+    serverAddress: 'http://localhost:8092/'
 }
 
 const register = async () => {
