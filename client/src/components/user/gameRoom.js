@@ -24,7 +24,7 @@ const GameRoom = () => {
     return (
         <Container fluid className={`vh-100 overflow-hidden ${theme}`}>
             <UserNavBar/>
-            <Row className='custom-h90'>
+            <Row className='flex-xxl-row flex-column-reverse custom-h90'>
                 <Col className='row align-items-center'>
                     <ChatRoom />
                 </Col>

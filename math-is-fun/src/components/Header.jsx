@@ -1,15 +1,24 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-const Header = ({player1, player2}) => {
-    const [timer, setTimer] = useState(60)
+const Header = ({player1, player2, start, setStart}) => {
+
+    const [timer, setTimer] = useState(0)
+
+    const timer1 = setTimeout(() => {
+        if (timer>0)setTimer(timer-1)
+        else {
+            setStart(false)
+            return
+        }
+    }, 1000)
 
     useEffect(() => {
-        setTimeout(() => {
-            if (timer>0)setTimer(timer-1)
-            else setTimer(60)
-        }, 1000)
-    }, [timer])
+        if (start) {
+            setTimer(10)
+            timer1
+        }
+    }, [start])
 
     return (
         <div class='container-fluid'>

@@ -5,7 +5,7 @@ const app = express()
 const PORT = 8091
 
 const data = {
-    name: 'The Counter Game', 
+    name: 'Math is Fun!', 
     maxPlayers: 4, 
     gameAddress: 'http://localhost:3001/', 
     serverAddress: 'http://localhost:8091/'
@@ -23,7 +23,6 @@ register()
 
 app.use(cors({credentials: true, origin: true}))
 app.use(express.json())
-app.use('/test', require('./routes/testRoutes'))
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

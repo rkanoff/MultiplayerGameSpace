@@ -94,7 +94,7 @@ const LandingPage = () => {
         <Container fluid className={`vh-100 d-flex align-items-center ${theme}`}>
             <Col>
                 <Stack className='align-items-center'>
-                    <h1 className='display-4 mb-5 customTitle' >Multiplayer Game Space</h1>
+                    <h1 className='display-4 text-center mb-5 customTitle' >Multiplayer Game Space</h1>
                     <Form className='w-50'>
                         <h2>Login</h2>
                         <Form.Group className="mb-3">

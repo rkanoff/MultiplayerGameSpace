@@ -10,11 +10,11 @@
             }
         },
         {
-            "label": "TestApp Build",
+            "label": "MathIsFun Build",
             "type": "shell",
-            "command": "npm start",
+            "command": "npm run dev",
             "options": {
-                "cwd": "${workspaceFolder}/testapp"
+                "cwd": "${workspaceFolder}/math-is-fun"
             }
         },
         {
@@ -34,11 +34,11 @@
             }
         },
         {
-            "label": "TestServer Build",
+            "label": "MathIsFunServer Build",
             "type": "shell",
             "command": "npm start",
             "options": {
-                "cwd": "${workspaceFolder}/testserver"
+                "cwd": "${workspaceFolder}/math-is-fun-server"
             }
         },
         {
@@ -47,7 +47,8 @@
             "command": "npm run socket",
             "options": {
                 "cwd": "${workspaceFolder}/server"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Server Build",
@@ -63,8 +64,8 @@
                 "Server Build",
                 "Socket Build",
                 "Client Build",
-                "TestServer Build",
-                "TestApp Build",
+                "MathIsFunServer Build",
+                "MathIsFun Build",
                 "TicTacToeServer Build",
                 "TicTacToeApp Build"
             ],
