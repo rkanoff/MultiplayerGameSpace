@@ -78,9 +78,9 @@ const LandingPage = () => {
         if (!currImg) {
             return (
                 <>
-                <h1 className='display-5'>The Counter Game!</h1>
-                <img src={require('../../clipart3575.png')} style={{ width: 400, height: 500 }} className='customImg' alt='counter' />
-                <h1 className='display-5'>Family Friendly Fun!</h1>
+                <h1 className='display-5'>Math is Fun!</h1>
+                <img src={require('../../math.png')} style={{ width: 400, height: 500 }} className='customImg' alt='counter' />
+                <h1 className='display-5 text-center'>Who will be the Ultimate Mathlete?</h1>
                 </>
             )
         }

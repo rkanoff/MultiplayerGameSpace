@@ -18,8 +18,8 @@ function App() {
 	// the current winner
 	const [winner, setWinner] = useState('');
 
-	const [player1, setPlayer1] = useState('Player 1')
-	const [player2, setPlayer2] = useState('Player 2')
+	const [player1, setPlayer1] = useState('')
+	const [player2, setPlayer2] = useState('')
 
 	// Sets the reset property to true
 	// which starts the chain

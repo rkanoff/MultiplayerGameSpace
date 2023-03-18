@@ -25,34 +25,34 @@ const Board = ({ reset, setReset, winner, setWinner, setPlayer1, setPlayer2}) =>
         })
 
 		socket.on('playerJoined', (message) => {
-			getCache()
-		})
-
-		socket.on('playerRemoved', (message) => {
-			getCache()
+			getPlayerList()
 		})
 
 		socket.emit('playerJoined', '')
-		getCache()
-
-		return async () => {
-			await axios.post('http://localhost/8092/test/removePlayer', { gameId: gameId, username: name})
-			socket.emit('playerRemoved','')
-			console.log('test')
-		}
+		getPlayerList()
 	}, [])
 
-	const getCache = async () => {
-		await axios.get('http://localhost:8092/test/getCache', { params: { gameId: gameId , username: name}})
-		.then((res) => {
-			setPlayer1(res.data.player1)
-			setPlayer2(res.data.player2)
-		})
-		.catch((error) => console.log(error))
-	}
+	// determine player names and positions
+	const getPlayerList = async () => {
+		await axios
+				.get('http://localhost:8081/games/playerList', { params: { gameId: gameId }})
+				.then((res) => {
+					if (name===res.data[0]) {
+					  setPlayer1(name)
+					   if (res.data[1]) setPlay(0)
+					}
+					else setPlayer1(res.data[0])
+					if (name===res.data[1]) {
+					  setPlayer2(name)
+					  setPlay(1)
+					}
+					else setPlayer2(res.data[1])
+				})
+				.catch((error) => console.log(error))
+	  }
 
 	// Creating a turn state, which indicates the current turn
-	const [turn, setTurn] = useState(0);
+	const [turn, setTurn] = useState();
 
 	// Creating a data state, which contains the
 	// current picture of the board
@@ -68,12 +68,12 @@ const Board = ({ reset, setReset, winner, setWinner, setPlayer1, setPlayer2}) =>
 	const draw = (index) => {
 		// Draws only if the position is not taken
 		// and winner is not decided yet
-		if (data[index - 1] === '' && winner === '' && (play==='' || play===turn)) {
+		if (data[index - 1] === '' && winner === '' && play===turn) {
 
 			// Draws X if it's player 1's turn else draws O
 			const current = turn === 0 ? "X" : "O"
 
-			setPlay(turn)
+			//setPlay(turn)
 
 			connection.emit('draw', { message: { player: current, index: index }})
 		}
@@ -121,9 +121,7 @@ const Board = ({ reset, setReset, winner, setWinner, setPlayer1, setPlayer2}) =>
 		// Resetting the winner
 		setWinner('');
 		setReset(false);
-		setPlay('')
 		resetGame()
-		getCache()
 	}, [reset, setReset, setWinner])
 
 	const resetGame = async () => {
@@ -183,6 +181,7 @@ const Board = ({ reset, setReset, winner, setWinner, setPlayer1, setPlayer2}) =>
 		if (checkWin()) {
 			setWinner(turn === 0 ? "Player 2 Wins!" :
 			"Player 1 Wins!");
+			
 		} else if (checkTie()) {
 			// Setting the winner to tie in case of a tie
 			setWinner("It's a Tie!");
