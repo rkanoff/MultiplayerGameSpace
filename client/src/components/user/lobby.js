@@ -40,7 +40,7 @@ const LobbyPage = () => {
     return (
         <Container fluid className={`vh-100 ${theme}`}>
             <UserNavBar/>
-            <Table striped border='true' variant={theme}>
+            <Table striped bordered variant={theme} style={{borderRadius: ''}}>
                 <thead>
                     <tr>
                         <th>Name</th>

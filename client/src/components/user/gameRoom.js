@@ -5,7 +5,6 @@ import ChatRoom from './chatRoom'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import IframeResizer from 'iframe-resizer-react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -22,18 +21,14 @@ const GameRoom = () => {
     }, [])
 
     return (
-        <Container fluid className={`vh-100 overflow-hidden ${theme}`}>
+        <Container fluid className={`vh-100 overflow-auto ${theme}`}>
             <UserNavBar/>
-            <Row className='flex-xxl-row flex-column-reverse custom-h90'>
+            <Row className='flex-xxl-row flex-sm-column-reverse custom-h90'>
                 <Col className='row align-items-center'>
                     <ChatRoom />
                 </Col>
                 <Col className='row align-items-center'>
-                        <IframeResizer
-                            log
-                            src={url}
-                            style={{ width: '1px', minWidth: '100%', height: '1px', minHeight: '70%'}}
-                        />
+                    <iframe style={{ minHeight: '400px', height: '75%', borderRadius: '5%'}} src={url} />
                 </Col>
             </Row>
         </Container>

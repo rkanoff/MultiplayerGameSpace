@@ -14,7 +14,8 @@ import jwt_decode from 'jwt-decode'
 import useAuth from '../../context/authProvider'
 import useTheme from '../../context/themeProvider'
 import Fade from 'react-bootstrap/Fade'
-import Image from 'react-bootstrap/Image'
+import Modal from 'react-bootstrap/Modal'
+import RegisterUserPage from './registerUserPage'
 
 const LandingPage = () => {
     const navigate = useNavigate()
@@ -24,7 +25,11 @@ const LandingPage = () => {
     const { theme, setTheme } = useTheme()
     const [errors, setErrors] = useState({username: null, password: null})
     const [open, setOpen] = useState(true);
-    const [currImg, setCurrImg] = useState(true);
+    const [currImg, setCurrImg] = useState(0);
+    const [show, setShow] = useState(false)
+
+    const handleOpen = () => setShow(true)
+    const handleClose = () => setShow(false)
 
     const updateForm = async ({ target : input}) => {
         setForm({ ...form, [input.id] : input.value })
@@ -56,7 +61,10 @@ const LandingPage = () => {
         const timer1 = setTimeout(() => {
             setOpen(false)
             const timer2 = setTimeout(() => {
-                setCurrImg(!currImg)
+                if (currImg<=1)
+                    setCurrImg(currImg+1)
+                else
+                    setCurrImg(0)
                 setOpen(true)
             }, 1600)
             return () => clearTimeout(timer2);
@@ -65,22 +73,32 @@ const LandingPage = () => {
     }
 
     const Images = () => {
-        if (currImg) {
+        if (currImg===0) {
             return (
                 <>
-                <h1 className='display-5'>Tic-Tac-Toe: X's vs O's!</h1>
+                <h1 className='display-5 text-center'>Tic-Tac-Toe: X's vs O's!</h1>
                 <img src={require('../../Tic_tac_toe.svg.png')} className='customImg' alt='tictactoe' />
-                <h1 className='display-5'>Rumble in the 3x3 Jungle!</h1>
+                <h1 className='display-5 text-center'>Rumble in the 3x3 Jungle!</h1>
                 </>
             )
         }
 
-        if (!currImg) {
+        if (currImg===1) {
             return (
                 <>
-                <h1 className='display-5'>Math is Fun!</h1>
-                <img src={require('../../math.png')} style={{ width: 400, height: 500 }} className='customImg' alt='counter' />
-                <h1 className='display-5 text-center'>Who will be the Ultimate Mathlete?</h1>
+                <h1 className='display-5 text-center mb-2'>Math is Fun!</h1>
+                <img src={require('../../Daco.png')} className='customImg' alt='math' />
+                <h1 className='display-5 text-center mt-2'>Yayyyyyy Math!</h1>
+                </>
+            )
+        }
+
+        if (currImg===2) {
+            return (
+                <>
+                    <h1 className='display-5 text-center mb-2'>Chess: Check Mate!</h1>
+                    <img src={require('../../chess.png')} className='customImg' alt='chess' />
+                    <h1 className='display-5 text-center mb-2'>It's a Good Knight for Chess!</h1>
                 </>
             )
         }
@@ -136,24 +154,24 @@ const LandingPage = () => {
                             </Col>
                         </Row>
                         <Nav.Item>
-                            <Nav.Link className='custom-link mt-3' onClick={ handleRegister }>New user? Register here!</Nav.Link>
+                            <Nav.Link className='custom-link mt-3' onClick={handleOpen}>New user? Register here!</Nav.Link>
                     </Nav.Item>
                     </Form>
                 </Stack>
             </Col>
             <Col>
                 <Fade in={open} appear className='customFade'>
-                    <Stack 
-                    className='d-flex align-items-center' 
-                    id="example-fade-text"
-                    onClick={() => setOpen(!open)}
-                    aria-controls="example-fade-text"
-                    aria-expanded={open}
-                    >
+                    <Stack className='d-flex align-items-center' aria-expanded={open} >
                         <Images />
                     </Stack>
                 </Fade>
             </Col>
+            
+            <Modal show={show} onClose={handleClose} centered >
+                <Modal.Body className={`${theme} rounded`}>
+                    <RegisterUserPage handleClose={handleClose} />
+                </Modal.Body>
+            </Modal>
         </Container>
     )
 }

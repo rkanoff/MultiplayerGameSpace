@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import useTheme from '../../context/themeProvider';
 import { newUserValidation } from '../../models/userValidation'
 
-const RegisterUserPage = () => {
+const RegisterUserPage = ({handleClose}) => {
     const url = "http://localhost:8081/users/register"
     const navigate = useNavigate()
     const [form, setForm] = useState({username: "", email: "", password: ""})
@@ -39,7 +39,7 @@ const RegisterUserPage = () => {
         {
             try {
                 await axios.post(url, form)
-                navigate("/")
+                handleClose()
             }
             catch (error) {
                 const name = error.response.data.message.split(' ')[0].toLowerCase()
@@ -51,11 +51,11 @@ const RegisterUserPage = () => {
 
     const handleCancel = async (event) => {
         event.preventDefault()
-        navigate("/")
+        handleClose()
     }
 
     return (
-        <Container fluid className={`vh-100 d-flex align-items-center justify-content-center ${theme}`}>    
+        <Container fluid className={`vh-50 d-flex align-items-center justify-content-center ${theme}`}>    
             <Form>
                 <h2>Register Below!</h2>
                 <Form.Group className='mb-3'>
