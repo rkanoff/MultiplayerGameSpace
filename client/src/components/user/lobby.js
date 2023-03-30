@@ -1,9 +1,7 @@
 import useTheme from '../../context/themeProvider'
-import UserNavBar from './userNavBar'
 import Container from 'react-bootstrap/esm/Container'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import useAuth from '../../context/authProvider'
 import { useState, useEffect } from 'react'
@@ -38,9 +36,8 @@ const LobbyPage = () => {
     },[])
 
     return (
-        <Container fluid className={`vh-100 ${theme}`}>
-            <UserNavBar/>
-            <Table striped bordered variant={theme} style={{borderRadius: ''}}>
+        <Container fluid className={`${theme} custom-h90`}>
+            <Table striped bordered variant={theme}>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -67,8 +64,7 @@ const LobbyPage = () => {
                         </tr>
                     ))}
                 </tbody>
-            </Table>
-            
+            </Table>     
         </Container>
     )
 }

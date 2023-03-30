@@ -1,6 +1,5 @@
 import useTheme from '../../context/themeProvider'
 import useAuth from '../../context/authProvider'
-import UserNavBar from './userNavBar'
 import ChatRoom from './chatRoom'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -21,8 +20,7 @@ const GameRoom = () => {
     }, [])
 
     return (
-        <Container fluid className={`vh-100 overflow-auto ${theme}`}>
-            <UserNavBar/>
+        <Container fluid className={`custom-h90 overflow-auto ${theme}`}>
             <Row className='flex-xxl-row flex-sm-column-reverse custom-h90'>
                 <Col className='row align-items-center'>
                     <ChatRoom />

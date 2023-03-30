@@ -23,7 +23,7 @@ const UserNavBar = () => {
     }
 
     const AdminLinks = () => {
-        if (auth.isAdmin) {
+        if (auth?.isAdmin) {
             return (
                 <>
                 <Nav.Link className='custom-nav' onClick={() => navigate('/adminLobby')}>Lobby(Admin only)</Nav.Link>
@@ -39,8 +39,7 @@ const UserNavBar = () => {
     }
 
     return (
-        <Row className='pb-2'>
-        <Navbar expand='lg' sticky='top' className={`custom-nav ${theme}`}>
+        <Navbar expand='lg' sticky='top' id='custom-nav' className={`custom-nav custom-h10 ${theme}`}>
             <Container fluid>
                 <Navbar.Brand className='custom-nav'>Multiplayer Game Space</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -62,12 +61,11 @@ const UserNavBar = () => {
                         <Nav.Link className='custom-nav' onClick={ handleLogout }>Logout</Nav.Link>
                     </Nav>
                     <Navbar.Text className='custom-nav'>
-                            You are logged in as: {auth.username}
+                            You are logged in as: {auth?.username}
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-        </Row>
     )
 }
 

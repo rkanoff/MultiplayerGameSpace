@@ -35,10 +35,10 @@
     background-color: var(--navDD);
 }
 .custom-h10 {
-    height: 10%;
+    height: 8vh;
 }
 .custom-h90 {
-    height: 90%;
+    height: 92vh;
 }
 .modal-header {
     background-color: var(--modBG);

@@ -103,8 +103,7 @@ const CreateGamePage = () => {
 
 
     return (
-        <Container fluid className={`vh-100 ${theme}`}>
-            <UserNavBar/>
+        <Container fluid className={`custom-h90 ${theme}`}>
             <Container className={`custom-h90 d-flex align-items-center justify-content-center`}>  
                 <Col className=''>
                     <Images />

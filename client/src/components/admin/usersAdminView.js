@@ -40,8 +40,7 @@ const AdminUsersPage = () => {
     },[])
 
     return (
-        <Container fluid className={`vh-100 ${theme}`}>
-            <UserNavBar/>
+        <Container fluid className={`custom-h90 ${theme}`}>
             <Table striped border='true' variant={theme}>
                 <thead>
                     <tr>

@@ -77,7 +77,7 @@ const LandingPage = () => {
             return (
                 <>
                 <h1 className='display-5 text-center'>Tic-Tac-Toe: X's vs O's!</h1>
-                <img src={require('../../Tic_tac_toe.svg.png')} className='customImg' alt='tictactoe' />
+                <img rel='preload' img src={require('../../Tic_tac_toe.svg.png')} className='customImg' alt='tictactoe' />
                 <h1 className='display-5 text-center'>Rumble in the 3x3 Jungle!</h1>
                 </>
             )
@@ -87,7 +87,7 @@ const LandingPage = () => {
             return (
                 <>
                 <h1 className='display-5 text-center mb-2'>Math is Fun!</h1>
-                <img src={require('../../Daco.png')} className='customImg' alt='math' />
+                <img rel='preload' img src={require('../../Daco.png')} className='customImg' alt='math' />
                 <h1 className='display-5 text-center mt-2'>Yayyyyyy Math!</h1>
                 </>
             )
@@ -97,7 +97,7 @@ const LandingPage = () => {
             return (
                 <>
                     <h1 className='display-5 text-center mb-2'>Chess: Check Mate!</h1>
-                    <img src={require('../../chess.png')} className='customImg' alt='chess' />
+                    <img rel='preload' img src={require('../../chess.png')} className='customImg' alt='chess' />
                     <h1 className='display-5 text-center mb-2'>It's a Good Knight for Chess!</h1>
                 </>
             )
@@ -107,6 +107,11 @@ const LandingPage = () => {
     useEffect(() => {
         timer()
     }, [currImg])
+
+    useEffect(() => {
+        let nav = document.getElementById('custom-nav')
+        nav.hidden = true
+    },[])
 
     return (
         <Container fluid className={`vh-100 d-flex align-items-center ${theme}`}>

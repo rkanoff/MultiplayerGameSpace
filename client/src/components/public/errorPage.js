@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
 import useTheme from '../../context/themeProvider'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import useAuth from '../../context/authProvider'
 
 const ErrorPage = () => {
@@ -22,6 +23,11 @@ const ErrorPage = () => {
             )
         }
     }
+
+    useEffect(() => {
+        let nav = document.getElementById('custom-nav')
+        nav.hidden = true
+    },[])
 
     return (
         <Container fluid className={`vh-100 d-flex ${theme}`}>

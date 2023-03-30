@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
 import LandingPage from './components/public/landingPage'
-import RegisterUserPage from './components/public/registerUserPage'
 import ErrorPage from './components/public/errorPage'
 import RequireAuth from './components/redirects/requireAuth'
 import PersistUser from './components/redirects/persistUser'
@@ -12,15 +11,17 @@ import CreateGamePage from './components/user/createGamePage'
 import AdminLobbyPage from './components/admin/lobbyAdminView'
 import AdminUsersPage from './components/admin/usersAdminView'
 import GameRoom from './components/user/gameRoom'
+import UserNavBar from './components/user/userNavBar'
 
 function App() {
   return (
+    <>
+    <UserNavBar />
     <Routes>
       <Route element={ <PersistUser /> }>
         <Route path='/*' element={ <ErrorPage />} />
           <Route element={ <PublicRedirect /> }>
             <Route path='/' element={ <LandingPage />} />
-            <Route path='/register' element={< RegisterUserPage />} />
           </Route>
         <Route element={ <RequireAuth /> }>
           <Route path='/lobby' element={ <LobbyPage /> } />
@@ -35,6 +36,7 @@ function App() {
         </Route>
       </Route>
     </Routes>
+    </>
   )
 }
 
