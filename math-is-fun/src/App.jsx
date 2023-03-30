@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import MainCard from './components/MainCard'
+import Card1 from './components/Card1'
+import Card2 from './components/Card2'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import axios from 'axios'
@@ -66,10 +67,10 @@ function App() {
 
         <div class='row h-70 align-items-center'>
           <div class='col h-100'>
-            <MainCard player={player} start={start} connection={connection} />
+            <Card1 player={player} start={start} connection={connection} />
           </div>
           <div class='col h-100'>
-            <MainCard player={!player} start={start} connection={connection} />
+            <Card2 player={player} start={start} connection={connection} />
           </div>
         </div>
 
