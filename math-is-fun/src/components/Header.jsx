@@ -1,12 +1,17 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-const Header = ({player1, player2, start, setStart}) => {
+const Header = ({player1, player2, start, setStart, setReset}) => {
 
-    const [timer, setTimer] = useState(0)
+    const [timer, setTimer] = useState(20)
 
     const timer1 = setTimeout(() => {
-        if (timer>0)setTimer(timer-1)
+        if (timer>0 && start) {
+            setTimer(timer-1)
+            if(timer===1) {
+                setReset(true)
+            }
+        }
         else {
             setStart(false)
             return
@@ -15,8 +20,7 @@ const Header = ({player1, player2, start, setStart}) => {
 
     useEffect(() => {
         if (start) {
-            setTimer(10)
-            timer1
+            setTimer(20)
         }
     }, [start])
 

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import ReactCardFlip from 'react-card-flip'
 
-const Card1 = ({player, start, connection}) => {
+const Card1 = ({player, start, connection, score1, setScore1}) => {
     const [question, setQuestion] = useState('')
     const [answer, setAnswer] = useState('')
     const [data, setData] = useState()
     const [response, setResponse] = useState('')
     const [flip, setFlip] = useState(false)
+    const [score, setScore] = useState(0)
 
     // generate question and answer
     const generateQuestion = () => {
@@ -16,7 +17,7 @@ const Card1 = ({player, start, connection}) => {
         const operator = operatorArray[Math.floor(Math.random()*operatorArray.length)]
 
         setQuestion(operand1+operator+operand2)
-        connection.emit('question1', operand1+operator+operand2)
+        connection?.emit('question1', operand1+operator+operand2+'=?')
 
         switch(operator) {
             case '+':
@@ -39,6 +40,7 @@ const Card1 = ({player, start, connection}) => {
 
         if(data==answer) {
             connection.emit('response1', 'Correct!')
+            connection.emit('score1', score1+1)
         }
         else {
             connection.emit('response1', 'Wrong...')
@@ -71,43 +73,49 @@ const Card1 = ({player, start, connection}) => {
         connection?.on('answer1', (message) => {
             setAnswer(message)
         })
+        connection?.on('score1', (message) => {
+            setScore1(message[0])
+        })
     }, [connection])
 
     // start round
     useEffect(() => {
+        let form = document.getElementById('data_id')
         if (start) {
             if (player) {
                 generateQuestion()
             }
+            connection.emit('score1', 0)
+            form.disabled = false
+        }
+        else {
+            connection?.emit('question1', 'Waiting...')
+            form.disabled = true
         }
     }, [start])
 
     // hide elements
     useEffect(() => {
-        let form = document.getElementById('form_id')
-        form.hidden = false
-        if (!player) {
-            let form = document.getElementById('form_id')
-            form.hidden = true
+        let form = document.getElementById('data_id')
+        form.disabled = true
+        if (start && player) {
+            form.disabled = false
         }
-    }, [player])
+    }, [start, player])
 
     return (
         <ReactCardFlip isFlipped={flip} flipDirection='horizontal' containerStyle={{height: '100%'}}>
             <div class='card h-100 text-dark justify-content-center'>
                 <div class='body'>
-                    <div class='row'>
-                    <div class='col'></div>
                     <div class='col'>
-                    <h3>{question}=?</h3>
+                    <h3>{question}</h3>
                         <form class='mb-3' id='form_id' onSubmit={checkAnswer}>
                             <input type='text' class='form-control text-center field'
                                 id='data_id'
                                 defaultValue={data}
                                 onChange={(e)=>setData(e.target.value)}/>
                         </form>
-                    </div>
-                    <div class='col'></div>
+                        <h3>Score: {score1}</h3>
                     </div>
                 </div>
             </div>

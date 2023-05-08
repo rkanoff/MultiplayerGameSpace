@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-const Footer = ({player, connection, setStart}) => {
+const Footer = ({player, connection, start, setStart}) => {
 
     const [difficulty1, setDifficulty1] = useState('Easy')
     const [difficulty2, setDifficulty2] = useState('Easy')
@@ -62,6 +62,29 @@ const Footer = ({player, connection, setStart}) => {
     useEffect(() => {
         if (ready && ready2) setStart(true)
     }, [ready, ready2])
+
+    useEffect(() => {
+        let btn1 = document.getElementById('ready1')
+        let btn2 = document.getElementById('ready2')
+        let btn3 = document.getElementById('dropdownMenuButton1')
+        let btn4 = document.getElementById('dropdownMenuButton2')
+        if (start) {
+            btn1.disabled = true
+            btn2.disabled = true
+            btn3.disabled = true
+            btn4.disabled = true
+        }
+        else {
+            if (player) {
+                btn1.disabled = false
+                btn3.disabled = false
+            }
+            if (!player) {
+                btn2.disabled = false
+                btn4.disabled = false
+            }
+        }
+    },[start])
 
     return (
         <div class='container-fluid'>

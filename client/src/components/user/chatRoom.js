@@ -81,7 +81,7 @@ const ChatRoom = () => {
             <Container className=''>
                 <Form>
                     <Row>
-                    <Col xs='8' md='9'>
+                    <Col>
                     <Form.Group className='mb-3' controlId='messageArea'>
                     <Form.Label className='row justify-content-center'>Chat</Form.Label>
                         <Form.Control ref={mesRef} as='textarea' rows={15} readOnly value={ allMessages.toString().replaceAll(',', '\n') }/>
@@ -95,7 +95,7 @@ const ChatRoom = () => {
                     </Form.Group>
                     </Col>
 
-                    <Col xs=''>
+                    <Col style={{maxWidth:'11rem'}}>
                     <Form.Group className='mb-3 overflow-y' controlId='userArea'>
                     <Form.Label className='row justify-content-center'>Player List</Form.Label>
                         <Form.Control as='textarea' rows={15} readOnly value={ playerList.toString().replaceAll(',', '\n') }/>

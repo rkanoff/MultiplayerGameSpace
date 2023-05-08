@@ -35,6 +35,11 @@ const LobbyPage = () => {
         getGames()
     },[])
 
+    useEffect(() => {
+        let nav = document.getElementById('custom-nav')
+        nav.hidden = false
+    },[])
+
     return (
         <Container fluid className={`${theme} custom-h90`}>
             <Table striped bordered variant={theme}>

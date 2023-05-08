@@ -30,6 +30,11 @@ const AdminLobbyPage = () => {
         getGames()
     },[])
 
+    useEffect(() => {
+        let nav = document.getElementById('custom-nav')
+        nav.hidden = false
+    },[])
+
     return (
         <Container fluid className={`custom-h90 ${theme}`}>
             <Table striped border='true' variant={theme}>

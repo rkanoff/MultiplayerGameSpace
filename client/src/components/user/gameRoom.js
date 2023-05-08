@@ -20,13 +20,13 @@ const GameRoom = () => {
     }, [])
 
     return (
-        <Container fluid className={`custom-h90 overflow-auto ${theme}`}>
-            <Row className='flex-xxl-row flex-sm-column-reverse custom-h90'>
-                <Col className='row align-items-center'>
+        <Container fluid className={`d-flex align-items-center overflow-auto ${theme}`} style={{minHeight: '43.3rem'}}>
+            <Row className='flex-xxl-row flex-sm-column-reverse col-12 align-items-center'>
+                <Col className='row align-items-center ' style={{maxWidth: '50rem'}}>
                     <ChatRoom />
                 </Col>
-                <Col className='row align-items-center'>
-                    <iframe style={{ minHeight: '400px', height: '75%', borderRadius: '5%'}} src={url} />
+                <Col className='row align-items-center p-2' style={{maxWidth: '50rem'}}>
+                    <iframe style={{ minHeight: '10cm', height:'26rem', borderRadius: '5%'}} src={url} />
                 </Col>
             </Row>
         </Container>

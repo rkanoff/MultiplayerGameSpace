@@ -48,7 +48,7 @@ const UserNavBar = () => {
                         <Nav.Link className='custom-nav' onClick={() => navigate('/lobby')}>Lobby</Nav.Link>   
                         <Nav.Link className='custom-nav' onClick={() => navigate('/createGame')}>Create Game</Nav.Link>
                         <AdminLinks />
-                        <NavDropdown title='Options'>     
+                        <NavDropdown title='Options' className='custom-nav'>     
                             <ToggleButtonGroup type='radio' name='themeOption' defaultValue={theme} onChange={setTheme}>
                                 <ToggleButton className='custom-btn' id='darkMode' value={'dark'}>
                                     Dark Mode

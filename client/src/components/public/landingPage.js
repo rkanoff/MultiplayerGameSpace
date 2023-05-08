@@ -77,7 +77,7 @@ const LandingPage = () => {
             return (
                 <>
                 <h1 className='display-5 text-center'>Tic-Tac-Toe: X's vs O's!</h1>
-                <img rel='preload' img src={require('../../Tic_tac_toe.svg.png')} className='customImg' alt='tictactoe' />
+                <img rel='preload'   img src={require('../../Tic_tac_toe.svg.png')} className='customImg' alt='tictactoe' />
                 <h1 className='display-5 text-center'>Rumble in the 3x3 Jungle!</h1>
                 </>
             )

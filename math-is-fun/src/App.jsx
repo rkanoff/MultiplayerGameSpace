@@ -5,12 +5,17 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import axios from 'axios'
 import { io } from 'socket.io-client'
+import Modal from 'react-modal'
 import './App.css'
 
 function App() {
 
   const [start, setStart] = useState(false)
   const [reset, setReset] = useState(false)
+  const [winner, setWinner] = useState('')
+  const [modal, setModal] = useState(false)
+  const [score1, setScore1] = useState(0)
+  const [score2, setScore2] = useState(0)
 
   // create socket and add listeners
   const [connection, setConnection] = useState()
@@ -58,24 +63,46 @@ function App() {
     getPlayerList()
   },[])
 
-  return (
-      <div class='container-fluid h-100 bg-dark '>
+  const closeModal = () => {
+    setReset(false)
+  }
 
+  useEffect(() => {
+    if (score1 > score2) {
+      setWinner(player1+' wins!')
+    }
+    if (score1 < score2) setWinner(player2+' wins!')
+    if (score1 === score2) setWinner('Tie!')
+    setModal(true)
+  },[reset])
+
+  return (
+      <div class='container-fluid h-100 bg-dark '>        
+        <Modal isOpen={reset}>
+          <div class='col align-items-center justify-content-center'>
+          <div class='row align-items-center justify-content-center'>
+          <h2>{winner}</h2>
+          </div>
+          <div class='row align-items-center justify-content-center'>
+          <button onClick={closeModal}>Close</button>
+          </div>
+          </div>
+        </Modal>
         <div class='row h-15 align-items-center justify-content-center'>
-          <Header player1={player1} player2={player2} start={start} setStart={setStart} />
+          <Header player1={player1} player2={player2} start={start} setStart={setStart} setReset={setReset}/>
         </div>
 
         <div class='row h-70 align-items-center'>
           <div class='col h-100'>
-            <Card1 player={player} start={start} connection={connection} />
+            <Card1 player={player} start={start} connection={connection} score1={score1} setScore1={setScore1}/>
           </div>
           <div class='col h-100'>
-            <Card2 player={player} start={start} connection={connection} />
+            <Card2 player={player} start={start} connection={connection} score2={score2} setScore2={setScore2}/>
           </div>
         </div>
 
         <div class='row h-15 align-items-center justify-content-center'>
-          <Footer player={player} connection={connection} setStart={setStart} />
+          <Footer player={player} connection={connection} start={start} setStart={setStart} />
         </div>
 
       </div>
